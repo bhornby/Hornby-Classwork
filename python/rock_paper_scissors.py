@@ -1,8 +1,9 @@
 import random
-victor = False
+victor = False ### SRC - I think the variable should be called game_over
 choices = ["rock","paper","scissors"]
 while not victor:
-    user_choice = input("enter your move: ")
+    user_choice = input("enter your move: ") ### SRC - It's not clear what I need to enter!
+    ### SRC - This should be a while rather than an if...
     if user_choice == 'rock' or user_choice == 'paper' or user_choice == 'scissors':
         print("valid move")
     else:
