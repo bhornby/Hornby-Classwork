@@ -8,4 +8,4 @@ def calc(n):
     
 print(calc(0))
 print(calc(4))
-print(calc(5))
+print(calc(6))
