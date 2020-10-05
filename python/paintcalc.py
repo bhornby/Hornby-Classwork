@@ -2,6 +2,9 @@
 # assume 1L of paint covers 11sqM
 
 
+
+### SRC - The idea here was that the user enters the height, width etc.
+### and you calculate the surface area....
 # rs = room size
 rs = input("how large is the room minus all unpaintable surfaces? (in sq m)")
 
