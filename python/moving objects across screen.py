@@ -48,7 +48,7 @@ while not done:
     screen.fill(BLACK)
     
     #draw the shapes sun and block
-    pygame.draw.rect(screen,BLUE, (220,165,200,150))
+    pygame.draw.rect(screen,BLUE, (220,200,200,150))
     pygame.draw.circle(screen,YELLOW, (sun_x,sun_y),40,0)
     
     pygame.display.flip()
