@@ -39,21 +39,23 @@ class Snow(pygame.sprite.Sprite):
         
         #set position of the sprite
         self.rect = self.image.get_rect()
-        self.rect.x = random.randrange(0,600)
-        self.rect.y = random.randrange(0,400)
+        self.rect.x = random.randrange(0,640)
+        self.rect.y = random.randrange(0,480)
         
     #end procedure    
     #class update function    
     def update(self):
         self.rect.y = self.rect.y + self.speed
-        if self.rect.y <= 0:
-            self.rect.y = 400
+        if self.rect.y > 480:
+            self.rect.y = 0
+            self.rect.x = random.randrange(0,640)
+        #end if 
     #end procedure
             
 #creating the snowflakes
 number_of_flakes = 50
 for x in range(number_of_flakes):
-    my_snow = Snow(WHITE, 5 ,5, 1)
+    my_snow = Snow(WHITE, 10 ,10, 1)
     snow_group.add(my_snow)
     all_sprite_group.add(my_snow)
 #next x
