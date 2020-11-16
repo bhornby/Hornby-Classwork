@@ -1,6 +1,5 @@
 #importing pygame
 import pygame
-import math
 import random
 
 #defining colours
@@ -11,7 +10,7 @@ YELLOW = (255,255,0)
 RED = (255,0,0)
 
 #black screen
-size = (640 , 480)
+size = (640,480)
 screen = pygame.display.set_mode(size)
 #title of the window
 pygame.display.set_caption("invader")
@@ -22,7 +21,7 @@ clock = pygame.time.Clock()
 
 class Invader(pygame.sprite.Sprite):
     #define the constructor
-    def __init__ (self, colour ,width, height, speed):
+    def __init__(self, colour ,width, height, speed):
         super().__init__()
         
         #create a sprite and dill it with colour
@@ -117,10 +116,13 @@ all_sprite_group.add(my_player)
 
 #creating the snowflakes
 number_of_invaders = 15
-for x in range(number_of_invaders):
-    my_invader = Invader(WHITE, 15 ,15, 5)
-    invaders_group.add(my_invader)
-    all_sprite_group.add(my_invader)
+if number_of_invaders < 1:
+    number_of_invaders = 15
+else:
+    for x in range(number_of_invaders):
+        my_invader = Invader(WHITE, 15 ,15, (3 +random.randrange(0,6)))
+        invaders_group.add(my_invader)
+        all_sprite_group.add(my_invader)
 #next x
     
 #game loop
@@ -132,13 +134,11 @@ while not done:
             
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:#if left key is pressed
-                my_player.player_set_speed(-5)
+                my_player.player_set_speed(-3)
             elif event.key == pygame.K_RIGHT:
-                my_player.player_set_speed(5)
-            #creation of the bullet
-                
+                my_player.player_set_speed(3)
             elif event.key == pygame.K_SPACE:
-                my_bullet = Bullet(RED, 6, my_player.rect.x,my_player.rect.y)
+                my_bullet = Bullet(RED, 10, my_player.rect.x,my_player.rect.y)
                 #creating the bullets 
                 bullet_group.add(my_bullet)
                 all_sprite_group.add(my_bullet)
@@ -162,9 +162,9 @@ while not done:
         bullet_hit_group = pygame.sprite.spritecollide(x, invaders_group, True)
         for foo in bullet_hit_group:
             my_player.bullet_count = my_player.bullet_count - 1
-    
-    
-        
+            number_of_invaders = number_of_invaders - 1
+
+
     #score limiter
     if my_player.lives < 1:
         screen.fill(WHITE)
