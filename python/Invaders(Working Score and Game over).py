@@ -51,7 +51,7 @@ class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and a
         super().__init__()
         
         #set player dimentions
-        self.lives = 5
+        self.lives = 3
         self.speed = 0
         self.bullet_count = 50
         self.image = pygame.Surface([width,height])
@@ -118,9 +118,9 @@ bullet.group.add(my_bullet)
 all_sprite_group.add(my_bullet)'''
 
 #creating the snowflakes
-number_of_invaders = 10
+number_of_invaders = 15
 for x in range(number_of_invaders):
-    my_invader = Invader(WHITE, 15 ,15, 1)
+    my_invader = Invader(WHITE, 15 ,15, 7)
     invaders_group.add(my_invader)
     all_sprite_group.add(my_invader)
 #next x
@@ -135,9 +135,9 @@ while not done:
             
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:#if left key is pressed
-                my_player.player_set_speed(-3)
+                my_player.player_set_speed(-5)
             elif event.key == pygame.K_RIGHT:
-                my_player.player_set_speed(3)
+                my_player.player_set_speed(5)
                 
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
@@ -159,7 +159,7 @@ while not done:
         screen.fill(WHITE)
         font= pygame.font.SysFont('Calibri', 50, True, False)
         text = font.render("Game Over",True,BLACK)
-        screen.blit(text, (200,200))
+        screen.blit(text, (screen.get_width()//2 - text.get_width()//2,screen.get_height()//2 - text.get_height()//2))
     else:
         #update all sprites    
         all_sprite_group.update()
