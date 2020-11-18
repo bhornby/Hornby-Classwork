@@ -115,7 +115,7 @@ my_player = Player(YELLOW,30,20)
 all_sprite_group.add(my_player)
 
 #creating the snowflakes
-number_of_invaders = 15
+number_of_invaders = 20
 if number_of_invaders < 1:
     number_of_invaders = 15
 else:
