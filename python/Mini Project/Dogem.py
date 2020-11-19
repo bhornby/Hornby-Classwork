@@ -82,13 +82,20 @@ all_sprite_group.add(my_player)
             
 wall_group = pygame.sprite.Group()
 
-for y in range(24):
-    for x in range(17):
-        if map[y][x] == 1:
-            my_wall = Wall(BLUE,40,40,960,690)
+x = 0
+y = 0
+for row in map:
+    for column in row:
+        if column == 1:
+            my_wall = Wall(WHITE,40,40,x,y)
             all_sprite_group.add(my_wall)
             wall_group.add(my_wall)
-            
+        x=x+40
+        #end if
+    #nex column
+    x = 0
+    y = y + 40
+    #next col
 pygame.init()
 #game loop
 while not done:
