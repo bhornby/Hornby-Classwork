@@ -39,7 +39,18 @@ class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and a
     def player_speed(self,x,y):
         self.rect.x += x
         self.rect.y += y
+        #end if
         
+    def player_limits(self):
+        if player.rect.x > 960:
+            player.rect.x = 960
+        elif player.rect.x < 40:
+            player.rect.x = 40
+        elif player.rect.y > 690:
+            player.rect.y = 690
+        elif player.rect.y < 40:
+            player.rect.y = 40
+        #end if
     #end procedure        
 #end class
         
@@ -77,25 +88,27 @@ map = [
 
 all_sprite_group = pygame.sprite.Group()
 
-my_player = Player(YELLOW,20,20)
+my_player = Player(YELLOW,40,40)
 all_sprite_group.add(my_player)
             
 wall_group = pygame.sprite.Group()
 
 x = 0
 y = 0
+
 for row in map:
     for column in row:
         if column == 1:
             my_wall = Wall(WHITE,40,40,x,y)
             all_sprite_group.add(my_wall)
             wall_group.add(my_wall)
-        x=x+40
+        x = x + 40
         #end if
-    #nex column
+    #next column
     x = 0
     y = y + 40
-    #next col
+#next row
+    
 pygame.init()
 #game loop
 while not done:
@@ -106,16 +119,16 @@ while not done:
         
     key = pygame.key.get_pressed()
     if key[pygame.K_LEFT]:#if left key is pressed
-        my_player.player_speed(-20,0)
+        my_player.player_speed(-10,0)
         
     elif key[pygame.K_RIGHT]:
-        my_player.player_speed(20,0)
+        my_player.player_speed(10,0)
         
     elif key[pygame.K_UP]:
-        my_player.player_speed(0,-20)
+        my_player.player_speed(0,-10)
         
     elif key[pygame.K_DOWN]:
-        my_player.player_speed(0,20)  
+        my_player.player_speed(0,10)  
 
     #update all sprites    
     all_sprite_group.update()
@@ -124,6 +137,7 @@ while not done:
     #draw function
     all_sprite_group.draw(screen)
     #flip display to show new position of objects
+    
     
     pygame.display.flip()
     clock.tick(60)
