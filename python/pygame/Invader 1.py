@@ -20,13 +20,11 @@ done = False
 clock = pygame.time.Clock()
 
 #lives
-def show_lives(x,y):
+'''def show_lives(x,y):
     font = pygame.font.SysFont('Calibri', 25, True,)
     lives = font.render("Lives: " + str(my_player.lives), True, WHITE)
-    screen.blit(lives,(x,y))
-    
-    for foo in player_hit_group:
-        my_player.lives = my_player.lives - 1
+    screen.blit(lives,(x,y))'''
+
 #end function
 
 class Invader(pygame.sprite.Sprite):
@@ -86,16 +84,19 @@ class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and a
 #initialise pygame
 pygame.init()
 
+
+
 #create a list of all invaders   
 invaders_group = pygame.sprite.Group()
 #creating a list of all sprites
 all_sprite_group = pygame.sprite.Group()
 
-
 #creating the player
 my_player = Player(YELLOW,30,20)
 all_sprite_group.add(my_player)
-        
+#colisions
+player_hit_group = pygame.sprite.spritecollide(my_player, invaders_group, True)
+
 #creating the snowflakes
 number_of_invaders = 10
 for x in range(number_of_invaders):
@@ -103,9 +104,9 @@ for x in range(number_of_invaders):
     invaders_group.add(my_invader)
     all_sprite_group.add(my_invader)
 #next x
+
     
-#colisions
-player_hit_group = pygame.sprite.spritecollide(my_player, invaders_group, True)
+
 
 #game loop
 while not done:
@@ -133,8 +134,12 @@ while not done:
     screen.fill(BLACK)
     #draw function
     all_sprite_group.draw(screen)
-    #display lives
-    show_lives(10,10)
+    #lives logic
+    
+    for foo in player_hit_group:
+        my_player.lives = my_player.lives - 1
+        
+
     
         #flip display to show new position of objects
     pygame.display.flip()
