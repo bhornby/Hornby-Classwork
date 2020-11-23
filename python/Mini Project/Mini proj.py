@@ -23,12 +23,12 @@ done = False
 clock = pygame.time.Clock()
 
 class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and attribute #and object is an instance of a class
-    def __init__(self,colour,width,height,x,y):
+    def __init__(self,colour,width,height,speed):
         super().__init__()
         
         #set player dimentions
-        self.speed.x = x
-        self.speed.y = y
+        self.speed_x = 0
+        self.speed_y = 0
         self.image = pygame.Surface([width,height])
         self.image.fill(colour)
         
@@ -38,12 +38,12 @@ class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and a
         self.rect.y = 500
         
     def update(self):
-        self.rect.x = self.rect.x + self.speed.x
-        self.rect.y = self.rect.y + self.speed.y
+        self.rect.x = self.rect.x + self.speed_x
+        self.rect.y = self.rect.y + self.speed_y
             
     def player_set_speed(self,x,y):
-        self.speed.x = x
-        self.speed.y = y
+        self.speed_x = x
+        self.speed_y = y
         
 class Wall(pygame.sprite.Sprite):
     def __init__(self,colour,width,height,x,y):
@@ -79,7 +79,7 @@ map = [
 
 all_sprite_group = pygame.sprite.Group()
 
-my_player = Player(YELLOW,40,40,0,0)
+my_player = Player(YELLOW,40,40,5)
 all_sprite_group.add(my_player)
             
 wall_group = pygame.sprite.Group()
@@ -123,8 +123,8 @@ while not done:
                 my_player.player_set_speed(0,10)
   
         elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
-                my_player.player_set_speed(0) 
+            if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT or event.key == pygame.K_UP or event.key == pygame.K_DOWN:
+                my_player.player_set_speed(0,0) 
 
 
     
