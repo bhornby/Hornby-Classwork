@@ -5,8 +5,8 @@ import random
 BLACK = (0,0,0)
 WHITE = (255,255,255)
 RED = (255,0,0,)
-BLUE = (0,0,139)
-YELLOW = (210,255,0)
+BLUE = (0,0,225)
+YELLOW = (255,255,0)
 
 #black screen
 size = (1000,720)
@@ -18,6 +18,9 @@ pygame.display.set_caption("MINI Project")
 
 #exit game falg set to false
 done = False
+
+a = 0
+b = 0
 
 #screen refresh rate
 clock = pygame.time.Clock()
@@ -37,9 +40,23 @@ class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and a
         self.rect.x = 360
         self.rect.y = 500
         
+        self.old_x =  self.rect.x
+        self.old_y = self.rect.y
+        
     def update(self):
+        
         self.rect.x = self.rect.x + self.speed_x
         self.rect.y = self.rect.y + self.speed_y
+        
+        wall_hit_list = pygame.sprite.spritecollide(my_player, wall_group, False)
+        for x in wall_hit_list:
+            self.rect.x =  self.old_x 
+            self.rect.y =  self.old_y 
+            self.speed_x = 0
+            self.speed_y = 0
+
+        self.old_y = self.rect.y 
+        self.old_x = self.rect.x 
             
     def player_set_speed(self,x,y):
         self.speed_x = x
@@ -59,20 +76,20 @@ class Wall(pygame.sprite.Sprite):
 map = [
        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+       [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1],
+       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,1],
+       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+       [1,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+       [1,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1],
        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+       [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+       [1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+       [1,0,1,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+       [1,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+       [1,0,1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
     ]
@@ -90,7 +107,7 @@ y = 0
 for row in map:
     for column in row:
         if column == 1:
-            my_wall = Wall(BLUE,40,40,x,y)
+            my_wall = Wall(WHITE,40,40,x,y)
             all_sprite_group.add(my_wall)
             wall_group.add(my_wall)
         x = x + 40
@@ -100,9 +117,6 @@ for row in map:
     y = y + 40
 #next row
 
-'''wall_hit_list = pygame.sprite.spritecollide(my_player, wall_group, True)
-    for x in wall_hit_list:
-        if x'''
 
 pygame.init()
 #game loop
@@ -121,13 +135,15 @@ while not done:
                 my_player.player_set_speed(0,-10)
             elif event.key == pygame.K_DOWN:
                 my_player.player_set_speed(0,10)
-  
+                
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT or event.key == pygame.K_UP or event.key == pygame.K_DOWN:
-                my_player.player_set_speed(0,0) 
-
-
+                my_player.player_set_speed(0,0)
+            
+            
     
+    #
+            
     
     #update all sprites    
     all_sprite_group.update()
