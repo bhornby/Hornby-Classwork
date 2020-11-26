@@ -19,9 +19,6 @@ pygame.display.set_caption("MINI Project")
 #exit game falg set to false
 done = False
 
-a = 0
-b = 0
-
 #screen refresh rate
 clock = pygame.time.Clock()
 
@@ -128,13 +125,13 @@ while not done:
             
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:#if left key is pressed
-                my_player.player_set_speed(-20,0)
+                my_player.player_set_speed(-5,0)
             elif event.key == pygame.K_RIGHT:
-                my_player.player_set_speed(20,0)
+                my_player.player_set_speed(5,0)
             elif event.key == pygame.K_UP:
-                my_player.player_set_speed(0,-20)
+                my_player.player_set_speed(0,-5)
             elif event.key == pygame.K_DOWN:
-                my_player.player_set_speed(0,20)
+                my_player.player_set_speed(0,5)
                 
         '''elif event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT or event.key == pygame.K_UP or event.key == pygame.K_DOWN:
