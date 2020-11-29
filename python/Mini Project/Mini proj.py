@@ -75,12 +75,13 @@ class Car(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.speed = speed
     #end procedure
     def update(self):
         self.rect.x = self.rect.x - self.speed
         if self.rect.x < 0:
             car_group.remove(self)
-            all_sprit_group.remove(self)
+            all_sprite_group.remove(self)
         #end if   
     #end procedure
 #end class
@@ -94,14 +95,14 @@ all_sprite_group.add(my_player)
             
 car_group = pygame.sprite.Group()
 
-car_lane_list = [2*block_size,3*block_size,5*block_size,6*block_size,7*block_size,10*block_size,12*block_size,13*block_size,14*block_size,15*block_size]
+car_lane_list = [1*block_size,2*block_size,3*block_size,5*block_size,6*block_size,7*block_size,10*block_size,12*block_size,13*block_size,14*block_size,]
 
 def car_spawn():
     x = screen.get_width()
     r = random.randint(0,9)
-    y = random.randint(0,len(car_lane_list)-1)
+    y = car_lane_list[random.randint(0,len(car_lane_list)-1)]
     speed = random.randint(3,6)
-    if r%3 == 0:
+    if r%7 == 0:
         my_car = Car(RED,block_size,block_size,x,y,speed)
         all_sprite_group.add(my_car)
         car_group.add(my_car)
