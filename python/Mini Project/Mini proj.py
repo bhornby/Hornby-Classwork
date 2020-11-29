@@ -8,8 +8,9 @@ RED = (255,0,0,)
 BLUE = (0,0,225)
 YELLOW = (255,255,0)
 
+block_size = 40
 #black screen
-size = (1000,720)
+size = (20 * block_size,16 * block_size)
 
 screen = pygame.display.set_mode(size)
 
@@ -34,8 +35,8 @@ class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and a
         
         #set position of player
         self.rect = self.image.get_rect()
-        self.rect.x = 360
-        self.rect.y = 500
+        self.rect.x = screen.get_width()//2 - self.image.get_width()
+        self.rect.y = screen.get_height()//2 - self.image.get_height()
         
         self.old_x =  self.rect.x
         self.old_y = self.rect.y
@@ -45,12 +46,19 @@ class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and a
         self.rect.x = self.rect.x + self.speed_x
         self.rect.y = self.rect.y + self.speed_y
         
-        wall_hit_list = pygame.sprite.spritecollide(my_player, wall_group, False)
-        for x in wall_hit_list:
-            self.rect.x =  self.old_x 
-            self.rect.y =  self.old_y 
-            self.speed_x = 0
-            self.speed_y = 0
+        if self.rect.x > screen.get_width() - self.image.get_width():  
+            self.rect.x =  self.old_x
+        elif self.rect.x < 0:  
+            self.rect.x =  self.old_x
+        #end if
+        if self.rect.y > screen.get_height() - self.image.get_height():
+            self.rect.y =  self.old_y
+        elif self.rect.y < 0:
+            self.rect.y =  self.old_y
+        #end if
+        
+        self.speed_x = 0
+        self.speed_y = 0
 
         self.old_y = self.rect.y 
         self.old_x = self.rect.x 
@@ -58,17 +66,6 @@ class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and a
     def player_set_speed(self,x,y):
         self.speed_x = x
         self.speed_y = y
-        
-class Wall(pygame.sprite.Sprite):
-    def __init__(self,colour,width,height,x,y):
-        super().__init__()
-        self.image = pygame.Surface([width,height])
-        self.image.fill(colour)
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-    #end procedure
-#end class
 
 class Car(pygame.sprite.Sprite):
     def __init__(self,colour,width,height,x,y):
@@ -82,28 +79,6 @@ class Car(pygame.sprite.Sprite):
 #end class
 
 
-
-map = [
-       [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],
-       [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-       [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-    ]
-
 all_sprite_group = pygame.sprite.Group()
 
 my_player = Player(YELLOW,40,40,5)
@@ -112,33 +87,19 @@ all_sprite_group.add(my_player)
 wall_group = pygame.sprite.Group()
 car_group = pygame.sprite.Group()
 
-x = 0
-y = 0
+car_spawn_list = []
+
+'''my_car = Car(RED,40,40,x,y)
+all_sprite_group.add(my_car)
+car_group.add(my_car)'''
+        
     
 
-for row in map:
-    for column in row:
-        if column == 1:
-            my_wall = Wall(WHITE,40,40,x,y)
-            all_sprite_group.add(my_wall)
-            wall_group.add(my_wall)
-        x = x + 40
-        #end if
-    #next column
-    x = 0
-    y = y + 40
+            
+        
+          
 #next row
 
-for row in map:
-    for column in row:
-        if column == 2:
-            my_car = Car(RED,40,40,x,y)
-            all_sprite_group.add(my_car)
-            car_group.add(my_car)
-        x = x + 40
-    #next column
-    x = 0
-    y = y + 40
 
 pygame.init()
 #game loop
@@ -150,13 +111,13 @@ while not done:
             
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:#if left key is pressed
-                my_player.player_set_speed(-5,0)
+                my_player.player_set_speed(-40,0)
             elif event.key == pygame.K_RIGHT:
-                my_player.player_set_speed(5,0)
+                my_player.player_set_speed(40,0)
             elif event.key == pygame.K_UP:
-                my_player.player_set_speed(0,-5)
+                my_player.player_set_speed(0,-40)
             elif event.key == pygame.K_DOWN:
-                my_player.player_set_speed(0,5)
+                my_player.player_set_speed(0,40)
                 
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT or event.key == pygame.K_UP or event.key == pygame.K_DOWN:
