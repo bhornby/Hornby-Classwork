@@ -36,7 +36,7 @@ class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and a
         #set position of player
         self.rect = self.image.get_rect()
         self.rect.x = screen.get_width()//2 - self.image.get_width()
-        self.rect.y = screen.get_height()//2 - self.image.get_height()
+        self.rect.y = screen.get_height()- self.image.get_height()
         
         self.old_x =  self.rect.x
         self.old_y = self.rect.y
@@ -68,7 +68,7 @@ class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and a
         self.speed_y = y
 
 class Car(pygame.sprite.Sprite):
-    def __init__(self,colour,width,height,x,y):
+    def __init__(self,colour,width,height,x,y,speed):
         super().__init__()
         self.image = pygame.Surface([width,height])
         self.image.fill(colour)
@@ -76,31 +76,38 @@ class Car(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
     #end procedure
+    def update(self):
+        self.rect.x = self.rect.x - self.speed
+        if self.rect.x < 0:
+            car_group.remove(self)
+            all_sprit_group.remove(self)
+        #end if   
+    #end procedure
 #end class
 
 
 all_sprite_group = pygame.sprite.Group()
 
 my_player = Player(YELLOW,40,40,5)
+
 all_sprite_group.add(my_player)
             
-wall_group = pygame.sprite.Group()
 car_group = pygame.sprite.Group()
 
-car_spawn_list = []
+car_lane_list = [2*block_size,3*block_size,5*block_size,6*block_size,7*block_size,10*block_size,12*block_size,13*block_size,14*block_size,15*block_size]
 
-'''my_car = Car(RED,40,40,x,y)
-all_sprite_group.add(my_car)
-car_group.add(my_car)'''
+def car_spawn():
+    x = screen.get_width()
+    r = random.randint(0,9)
+    y = random.randint(0,len(car_lane_list)-1)
+    speed = random.randint(3,6)
+    if r%3 == 0:
+        my_car = Car(RED,block_size,block_size,x,y,speed)
+        all_sprite_group.add(my_car)
+        car_group.add(my_car)
+    #end if
+#end procedure
         
-    
-
-            
-        
-          
-#next row
-
-
 pygame.init()
 #game loop
 while not done:
@@ -123,11 +130,11 @@ while not done:
             if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT or event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                 my_player.player_set_speed(0,0)
             
-            
+           
     
-    #
-            
     
+            
+    car_spawn()
     #update all sprites    
     all_sprite_group.update()
     #screen background is black
