@@ -12,7 +12,11 @@ block_size = 40
 #black screen
 size = (20 * block_size,16 * block_size)
 
-car_lane_list = [[4,7,2,9,],
+car_lane_list = [[2,6,8],
+                 [4,9,3],
+                 [3,5,9,10,13],
+                 [6,8,9,11,14],
+                 [4,7,2,9,],
                  [1,3,5,6,7,14,],
                  [1,5,6,8,9,10,14],
                  [1,2,3,7,10,11,13],
@@ -215,8 +219,8 @@ while not done:
     if player_hit_list:
         my_player.rect.x = screen.get_width()//2 - my_player.image.get_width()
         my_player.rect.y = screen.get_height()- my_player.image.get_height()
-        p = p + 2
-        o = o + 2
+        p = p + 1
+        o = o + 1
         level = level + 1
         if level >= len(car_lane_list):
             lives = 0
