@@ -96,8 +96,8 @@ class Portal(pygame.sprite.Sprite):
         self.image = pygame.Surface([width,height])
         self.image.fill(colour)
         self.rect = self.image.get_rect()
-        self.rect.x = random.randint(0,screen.get_width())
-        self.rect.y = 1*block_size
+        self.rect.x = 9*block_size
+        self.rect.y = 0*block_size
     #end procedure
     
 all_sprite_group = pygame.sprite.Group()
@@ -135,7 +135,7 @@ def show_score(x,y):
     text = font.render("Score: " + str(my_player.score),True,WHITE)
     screen.blit(text, (x,y))
 #end functions    
-        
+
 pygame.init()
 #game loop
 while not done:
@@ -165,8 +165,8 @@ while not done:
         my_player.lives = my_player.lives - 1
     #next x
     
-    player_hit_group = pygame.sprite.spritecollide(my_player, portal_group, True)
-    for x in player_hit_group:
+    player_hit_list = pygame.sprite.spritecollide(my_player, portal_group, True)
+    for x in player_hit_list:
         my_player.rect.x = screen.get_width()//2 - my_player.image.get_width()
         my_player.rect.y = screen.get_height()- my_player.image.get_height()
     #next x
@@ -190,7 +190,7 @@ while not done:
         #draw function
         all_sprite_group.draw(screen)
         
-    
+    portal_spawn()
     car_spawn()
     show_score(20,20)
     pygame.display.flip()
