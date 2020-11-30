@@ -90,17 +90,27 @@ class Car(pygame.sprite.Sprite):
         #end if   
     #end procedure
 #end class
-
-
+class Portal(pygame.sprite.Sprite):
+    def __init__(self,colour,width,height):
+        super().__init__()
+        self.image = pygame.Surface([width,height])
+        self.image.fill(colour)
+        self.rect = self.image.get_rect()
+        self.rect.x = random.randint(0,screen.get_width())
+        self.rect.y = 1*block_size
+    #end procedure
+    
 all_sprite_group = pygame.sprite.Group()
 
-my_player = Player(YELLOW,40,40,5)
+my_player = Player(YELLOW,block_size,block_size,5)
 
 all_sprite_group.add(my_player)
             
 car_group = pygame.sprite.Group()
 
 car_lane_list = [1*block_size,2*block_size,3*block_size,5*block_size,6*block_size,7*block_size,10*block_size,12*block_size,13*block_size,14*block_size,]
+
+portal_group = pygame.sprite.Group()
 
 def car_spawn():
     x = screen.get_width()
@@ -112,6 +122,12 @@ def car_spawn():
         all_sprite_group.add(my_car)
         car_group.add(my_car)
     #end if
+#end procedure
+
+def portal_spawn():
+    my_portal = Portal(WHITE,block_size,block_size)
+    all_sprite_group.add(my_portal)
+    portal_group.add(my_portal)
 #end procedure
 
 def show_score(x,y):
@@ -148,6 +164,15 @@ while not done:
     for x in player_hit_group:
         my_player.lives = my_player.lives - 1
     #next x
+    
+    player_hit_group = pygame.sprite.spritecollide(my_player, portal_group, True)
+    for x in player_hit_group:
+        my_player.rect.x = screen.get_width()//2 - my_player.image.get_width()
+        my_player.rect.y = screen.get_height()- my_player.image.get_height()
+    #next x
+        
+    
+    
     if my_player.lives < 1:
         screen.fill(WHITE)
         font= pygame.font.SysFont('Arial', 50, True, False)
@@ -164,6 +189,7 @@ while not done:
         screen.fill(BLUE)
         #draw function
         all_sprite_group.draw(screen)
+        
     
     car_spawn()
     show_score(20,20)
