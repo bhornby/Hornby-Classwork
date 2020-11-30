@@ -5,7 +5,7 @@ import random
 BLACK = (0,0,0)
 WHITE = (255,255,255)
 RED = (255,0,0,)
-BLUE = (0,0,225)
+BLUE = (135,206,235)
 YELLOW = (255,255,0)
 
 block_size = 40
@@ -32,6 +32,9 @@ class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and a
         self.speed_y = 0
         self.image = pygame.Surface([width,height])
         self.image.fill(colour)
+        self.score = 0
+        self.old_score = 0
+        self.lives = 1
         
         #set position of player
         self.rect = self.image.get_rect()
@@ -61,7 +64,9 @@ class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and a
         self.speed_y = 0
 
         self.old_y = self.rect.y 
-        self.old_x = self.rect.x 
+        self.old_x = self.rect.x
+        
+        self.old_score = self.score 
             
     def player_set_speed(self,x,y):
         self.speed_x = x
@@ -101,13 +106,19 @@ def car_spawn():
     x = screen.get_width()
     r = random.randint(0,9)
     y = car_lane_list[random.randint(0,len(car_lane_list)-1)]
-    speed = random.randint(3,6)
+    speed = random.randint(4,6)
     if r%7 == 0:
         my_car = Car(RED,block_size,block_size,x,y,speed)
         all_sprite_group.add(my_car)
         car_group.add(my_car)
     #end if
 #end procedure
+
+def show_score(x,y):
+    font = pygame.font.SysFont('Arial', 25, True, False)
+    text = font.render("Score: " + str(my_player.score),True,WHITE)
+    screen.blit(text, (x,y))
+#end functions    
         
 pygame.init()
 #game loop
@@ -124,28 +135,38 @@ while not done:
                 my_player.player_set_speed(40,0)
             elif event.key == pygame.K_UP:
                 my_player.player_set_speed(0,-40)
+                my_player.score = my_player.score + 1
             elif event.key == pygame.K_DOWN:
                 my_player.player_set_speed(0,40)
+                my_player.score = my_player.score - 1
                 
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT or event.key == pygame.K_UP or event.key == pygame.K_DOWN:
                 my_player.player_set_speed(0,0)
             
-           
+    player_hit_group = pygame.sprite.spritecollide(my_player, car_group, True)
+    for x in player_hit_group:
+        my_player.lives = my_player.lives - 1
+    #next x
+    if my_player.lives < 1:
+        screen.fill(WHITE)
+        font= pygame.font.SysFont('Arial', 50, True, False)
+        font2= pygame.font.SysFont('Arial', 20, True, False)
+        text = font.render("Game Over",True,BLACK)
+        text2 = font2.render("Score: " + str(my_player.old_score),True,BLACK)
+        screen.blit(text, (screen.get_width()//2 - text.get_width()//2,screen.get_height()//2 - text.get_height()//2))
+        screen.blit(text2, (screen.get_width()//2 - text2.get_width()//2,screen.get_height()//1.8 - text2.get_height()//2))
+        
+    else:
+        #update all sprites    
+        all_sprite_group.update()
+        #screen background is black
+        screen.fill(BLUE)
+        #draw function
+        all_sprite_group.draw(screen)
     
-    
-            
     car_spawn()
-    #update all sprites    
-    all_sprite_group.update()
-    #screen background is black
-    screen.fill(BLACK)
-    #draw function
-    all_sprite_group.draw(screen)
-    #flip display to show new position of objects
-    
-    
-    
+    show_score(20,20)
     pygame.display.flip()
     clock.tick(60)
     
