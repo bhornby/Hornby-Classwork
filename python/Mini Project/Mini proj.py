@@ -12,7 +12,12 @@ block_size = 40
 #black screen
 size = (20 * block_size,16 * block_size)
 
-car_lane_list = [1*block_size,2*block_size,3*block_size,5*block_size,6*block_size,7*block_size,10*block_size,12*block_size,13*block_size,14*block_size,]
+car_lane_list = [[4,7,2,9,],
+                 [1,3,5,6,7,14,],
+                 [1,5,6,8,9,10,14],
+                 [1,2,3,7,10,11,13,15],
+                 [2,4,5,6,7,8,10,13,14],
+                 ]
 
 screen = pygame.display.set_mode(size)
 
@@ -125,14 +130,24 @@ def reset_game():
     global my_player
     my_player = Player(YELLOW,block_size,block_size,5)
     
+    global level
+    level = 0
+    
     all_sprite_group.add(my_player)
 #end procedure
     
-def car_spawn():
+def car_spawn(level):
+    global p
+    global o
+    o = 4
+    p = 6
     x = screen.get_width()
     r = random.randint(0,9)
-    y = car_lane_list[random.randint(0,len(car_lane_list)-1)]
-    speed = random.randint(4,6)
+    l = car_lane_list[level]
+    y = l[random.randint(0,len(l)-1)]
+    y = y*block_size
+    #next b,c
+    speed = random.randint(o,p)
     if r%7 == 0:
         my_car = Car(RED,block_size,block_size,x,y,speed)
         all_sprite_group.add(my_car)
@@ -154,6 +169,10 @@ def show_score(x,y):
 def show_time(x,y):
     font = pygame.font.SysFont('Arial', 25, True, False)
     text = font.render("Time: " + str(my_player.time),True,WHITE)
+    screen.blit(text, (x,y))
+def show_level(x,y):
+    font = pygame.font.SysFont('Arial', 25, True, False)
+    text = font.render("Level: " + str(level + 1),True,WHITE)
     screen.blit(text, (x,y))
     
 reset_game()
@@ -189,9 +208,15 @@ while not done:
     #next x
     
     player_hit_list = pygame.sprite.spritecollide(my_player, portal_group, True)
-    for x in player_hit_list:
+    if player_hit_list:
         my_player.rect.x = screen.get_width()//2 - my_player.image.get_width()
         my_player.rect.y = screen.get_height()- my_player.image.get_height()
+        p = p + 2
+        o = o + 2
+        level = level + 1
+        if level >= len(car_lane_list):
+            level = 0
+        #end if
     #next x
         
     
@@ -199,11 +224,12 @@ while not done:
     if my_player.lives < 1:
         screen.fill(WHITE)
         font= pygame.font.SysFont('Arial', 50, True, False)
-        font2= pygame.font.SysFont('Arial', 20, True, False)
-        
-        text = [(font.render("Game Over",True,BLACK),2),
-                (font2.render("Score: " + str(my_player.old_score),True,BLACK),1.8),
-                (font2.render("Time: " + str(my_player.old_time),True,BLACK),1.65)
+        font2= pygame.font.SysFont('Arial', 30, True, False)
+        #array of tuples
+        text = [(font.render("GAME OVER",True,BLACK),4),
+                (font2.render("Score: " + str(my_player.old_score),True,BLACK),2.4),
+                (font2.render("Time: " + str(my_player.old_time),True,BLACK),2.1),
+                (font.render("HIT RETURN TO PLAY AGAIN",True,BLACK),3)
                 ]
         for t,h in text:    
             screen.blit(t, (screen.get_width()//2 - t.get_width()//2,screen.get_height()//h - t.get_height()//2))
@@ -217,9 +243,10 @@ while not done:
         all_sprite_group.draw(screen)
         
     portal_spawn()
-    car_spawn()
-    show_score(20,20)
-    show_time(20,45)
+    car_spawn(level)
+    show_score(20,45)
+    show_time(20,70)
+    show_level(20,20)
     pygame.display.flip()
     clock.tick(60)
     
