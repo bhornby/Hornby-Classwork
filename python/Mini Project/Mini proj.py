@@ -12,11 +12,15 @@ block_size = 40
 #black screen
 size = (20 * block_size,16 * block_size)
 
+car_lane_list = [1*block_size,2*block_size,3*block_size,5*block_size,6*block_size,7*block_size,10*block_size,12*block_size,13*block_size,14*block_size,]
+
 screen = pygame.display.set_mode(size)
 
 #title of the window
 pygame.display.set_caption("MINI Project")
 
+
+#time
 #exit game falg set to false
 done = False
 
@@ -35,6 +39,10 @@ class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and a
         self.score = 0
         self.old_score = 0
         self.lives = 1
+        self.time = 0
+        self.old_time = 0
+        self.start_time = 0
+        
         
         #set position of player
         self.rect = self.image.get_rect()
@@ -67,7 +75,11 @@ class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and a
         self.old_x = self.rect.x
         
         self.old_score = self.score 
-            
+        self.old_time = self.time
+        if self.start_time == 0:
+            self.start_time = pygame.time.get_ticks()//1000
+        self.time = pygame.time.get_ticks()//1000 - self.start_time
+        
     def player_set_speed(self,x,y):
         self.speed_x = x
         self.speed_y = y
@@ -99,19 +111,23 @@ class Portal(pygame.sprite.Sprite):
         self.rect.x = 9*block_size
         self.rect.y = 0*block_size
     #end procedure
+        
+def reset_game():    
+    global all_sprite_group
+    all_sprite_group = pygame.sprite.Group()
     
-all_sprite_group = pygame.sprite.Group()
-
-my_player = Player(YELLOW,block_size,block_size,5)
-
-all_sprite_group.add(my_player)
-            
-car_group = pygame.sprite.Group()
-
-car_lane_list = [1*block_size,2*block_size,3*block_size,5*block_size,6*block_size,7*block_size,10*block_size,12*block_size,13*block_size,14*block_size,]
-
-portal_group = pygame.sprite.Group()
-
+    global car_group
+    car_group = pygame.sprite.Group()
+     
+    global portal_group 
+    portal_group = pygame.sprite.Group()
+    
+    global my_player
+    my_player = Player(YELLOW,block_size,block_size,5)
+    
+    all_sprite_group.add(my_player)
+#end procedure
+    
 def car_spawn():
     x = screen.get_width()
     r = random.randint(0,9)
@@ -134,8 +150,13 @@ def show_score(x,y):
     font = pygame.font.SysFont('Arial', 25, True, False)
     text = font.render("Score: " + str(my_player.score),True,WHITE)
     screen.blit(text, (x,y))
-#end functions    
-
+#end functions
+def show_time(x,y):
+    font = pygame.font.SysFont('Arial', 25, True, False)
+    text = font.render("Time: " + str(my_player.time),True,WHITE)
+    screen.blit(text, (x,y))
+    
+reset_game()
 pygame.init()
 #game loop
 while not done:
@@ -155,6 +176,8 @@ while not done:
             elif event.key == pygame.K_DOWN:
                 my_player.player_set_speed(0,40)
                 my_player.score = my_player.score - 1
+            elif event.key == pygame.K_RETURN and my_player.lives < 1:
+                reset_game()
                 
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT or event.key == pygame.K_UP or event.key == pygame.K_DOWN:
@@ -177,11 +200,14 @@ while not done:
         screen.fill(WHITE)
         font= pygame.font.SysFont('Arial', 50, True, False)
         font2= pygame.font.SysFont('Arial', 20, True, False)
-        text = font.render("Game Over",True,BLACK)
-        text2 = font2.render("Score: " + str(my_player.old_score),True,BLACK)
-        screen.blit(text, (screen.get_width()//2 - text.get_width()//2,screen.get_height()//2 - text.get_height()//2))
-        screen.blit(text2, (screen.get_width()//2 - text2.get_width()//2,screen.get_height()//1.8 - text2.get_height()//2))
         
+        text = [(font.render("Game Over",True,BLACK),2),
+                (font2.render("Score: " + str(my_player.old_score),True,BLACK),1.8),
+                (font2.render("Time: " + str(my_player.old_time),True,BLACK),1.65)
+                ]
+        for t,h in text:    
+            screen.blit(t, (screen.get_width()//2 - t.get_width()//2,screen.get_height()//h - t.get_height()//2))
+        #next t,h
     else:
         #update all sprites    
         all_sprite_group.update()
@@ -193,6 +219,7 @@ while not done:
     portal_spawn()
     car_spawn()
     show_score(20,20)
+    show_time(20,45)
     pygame.display.flip()
     clock.tick(60)
     
