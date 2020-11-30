@@ -15,8 +15,9 @@ size = (20 * block_size,16 * block_size)
 car_lane_list = [[4,7,2,9,],
                  [1,3,5,6,7,14,],
                  [1,5,6,8,9,10,14],
-                 [1,2,3,7,10,11,13,15],
+                 [1,2,3,7,10,11,13],
                  [2,4,5,6,7,8,10,13,14],
+                 [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
                  ]
 
 screen = pygame.display.set_mode(size)
@@ -133,6 +134,9 @@ def reset_game():
     global level
     level = 0
     
+    p = 0
+    o = 0
+    
     all_sprite_group.add(my_player)
 #end procedure
     
@@ -199,7 +203,7 @@ while not done:
                 reset_game()
                 
         elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT or event.key == pygame.K_UP or event.key == pygame.K_DOWN:
+            if event.key == pygame.K_DOWN or event.key == pygame.K_UP or event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 my_player.player_set_speed(0,0)
             
     player_hit_group = pygame.sprite.spritecollide(my_player, car_group, True)
@@ -215,7 +219,7 @@ while not done:
         o = o + 2
         level = level + 1
         if level >= len(car_lane_list):
-            level = 0
+            lives = 0
         #end if
     #next x
         
