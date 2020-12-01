@@ -7,6 +7,7 @@ WHITE = (255,255,255)
 RED = (255,0,0,)
 BLUE = (135,206,235)
 YELLOW = (255,255,0)
+GREEN= (124,252,0)
 
 block_size = 40
 #black screen
@@ -23,6 +24,17 @@ car_lane_list = [[2,6,8],
                  [2,4,5,6,7,8,10,13,14],
                  [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
                  ]
+grass_lane_list = [[1,3,4,5,7,9,10,11,12,13,14,15,16],
+                   [1,2,5,6,7,8,10,11,12,13,14,15,16],
+                   [1,2,4,6,7,8,11,12,14,15,16],
+                   [1,2,3,4,5,7,10,12,13,15,16],
+                   [1,3,5,6,8,10,11,12,13,14,15,16],
+                   [2,4,8,9,10,11,12,13,14,15,16],
+                   [2,3,4,7,11,12,13,15,16],
+                   [4,5,6,8,9,12,14,15,16],
+                   [1,3,9,10,11,12,15,16],
+                   [15,16],
+                    ]
 
 screen = pygame.display.set_mode(size)
 
@@ -122,6 +134,15 @@ class Portal(pygame.sprite.Sprite):
         self.rect.y = 0*block_size
     #end procedure
         
+class Grass(pygame.sprite.Sprite):
+    def __init__(self,colour,width,height,x,y):
+        super().__init__()
+        self.image = pygame.Surface([width,height])
+        self.image.fill(colour)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+        
 def reset_game():    
     global all_sprite_group
     all_sprite_group = pygame.sprite.Group()
@@ -135,6 +156,9 @@ def reset_game():
     global my_player
     my_player = Player(YELLOW,block_size,block_size,5)
     
+    global grass_group
+    grass_group = pygame.sprite.Group()
+    
     global level
     level = 0
     
@@ -143,7 +167,17 @@ def reset_game():
     
     all_sprite_group.add(my_player)
 #end procedure
+def grass_spawn(level):
     
+    x = 0   
+    l = grass_lane_list[level]
+    y = l[random.randint(0,len(l)-1)]
+    y = y*block_size
+    
+    my_grass = Grass(GREEN,block_size,block_size,x,y)
+    all_sprite_group.add(my_grass)
+    grass_group.add(my_grass)
+    x = x + 1
 def car_spawn(level):
     global p
     global o
@@ -219,11 +253,11 @@ while not done:
     if player_hit_list:
         my_player.rect.x = screen.get_width()//2 - my_player.image.get_width()
         my_player.rect.y = screen.get_height()- my_player.image.get_height()
-        p = p + 1
-        o = o + 1
+        p = p + 2
+        o = o + 2
         level = level + 1
         if level >= len(car_lane_list):
-            lives = 0
+            level = 0
         #end if
     #next x
         
@@ -252,6 +286,7 @@ while not done:
         
     portal_spawn()
     car_spawn(level)
+    grass_spawn(level)
     show_score(20,45)
     show_time(20,70)
     show_level(20,20)
