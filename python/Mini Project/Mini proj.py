@@ -167,7 +167,7 @@ def reset_game():
     
     all_sprite_group.add(my_player)
 #end procedure
-def grass_spawn(level):
+'''def grass_spawn(level):
     
     x = 0   
     l = grass_lane_list[level]
@@ -177,7 +177,7 @@ def grass_spawn(level):
     my_grass = Grass(GREEN,block_size,block_size,x,y)
     all_sprite_group.add(my_grass)
     grass_group.add(my_grass)
-    x = x + 1
+    x = x + 1'''
 def car_spawn(level):
     global p
     global o
@@ -258,6 +258,7 @@ while not done:
         level = level + 1
         if level >= len(car_lane_list):
             level = 0
+        
         #end if
     #next x
         
@@ -286,7 +287,7 @@ while not done:
         
     portal_spawn()
     car_spawn(level)
-    grass_spawn(level)
+#     grass_spawn(level)
     show_score(20,45)
     show_time(20,70)
     show_level(20,20)
