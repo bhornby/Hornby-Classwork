@@ -1,5 +1,6 @@
 import pygame
 import random
+from os import path
 
 #defining colours
 BLACK = (0,0,0)
@@ -13,6 +14,8 @@ block_size = 40
 #black screen
 size = (20 * block_size,16 * block_size)
 
+HS_FILE = "highscore.txt"
+
 car_lane_list = [[2,6,8],
                  [4,9,3],
                  [3,5,9,10,13],
@@ -24,22 +27,11 @@ car_lane_list = [[2,6,8],
                  [2,4,5,6,7,8,10,13,14],
                  [1,2,3,4,5,6,7,8,9,10,11,12,13,14]
                  ]
-grass_lane_list = [[1,3,4,5,7,9,10,11,12,13,14,15,16],
-                   [1,2,5,6,7,8,10,11,12,13,14,15,16],
-                   [1,2,4,6,7,8,11,12,14,15,16],
-                   [1,2,3,4,5,7,10,12,13,15,16],
-                   [1,3,5,6,8,10,11,12,13,14,15,16],
-                   [2,4,8,9,10,11,12,13,14,15,16],
-                   [2,3,4,7,11,12,13,15,16],
-                   [4,5,6,8,9,12,14,15,16],
-                   [1,3,9,10,11,12,15,16],
-                   [15,16],
-                    ]
 
 screen = pygame.display.set_mode(size)
 
 #title of the window
-pygame.display.set_caption("MINI Project")
+pygame.display.set_caption("CRUSTY ROAD")
 
 
 #time
@@ -48,6 +40,44 @@ done = False
 
 #screen refresh rate
 clock = pygame.time.Clock()
+
+def reset_game():    
+    global all_sprite_group
+    all_sprite_group = pygame.sprite.Group()
+    
+    global car_group
+    car_group = pygame.sprite.Group()
+     
+    global portal_group 
+    portal_group = pygame.sprite.Group()
+    
+    global my_player
+    my_player = Player(YELLOW,block_size,block_size,5)
+    
+    
+    global level
+    level = 0
+    
+    
+    global p
+    global o
+    p=0
+    o=0
+    
+    all_sprite_group.add(my_player)
+    load_data()
+#end procedure
+    
+def load_data():
+    #load highscore
+    global highscore
+    dir = path.dirname(__file__)
+    with open(path.join(dir, HS_FILE),'w') as f: #w opens file for reading and writing
+        try:
+            highscore = int(f.read())
+        except:
+            highscore = 0
+
 
 class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and attribute #and object is an instance of a class
     def __init__(self,colour,width,height,speed):
@@ -106,6 +136,7 @@ class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and a
         self.speed_x = x
         self.speed_y = y
 
+
 class Car(pygame.sprite.Sprite):
     def __init__(self,colour,width,height,x,y,speed):
         super().__init__()
@@ -142,45 +173,9 @@ class Grass(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        
-def reset_game():    
-    global all_sprite_group
-    all_sprite_group = pygame.sprite.Group()
     
-    global car_group
-    car_group = pygame.sprite.Group()
-     
-    global portal_group 
-    portal_group = pygame.sprite.Group()
-    
-    global my_player
-    my_player = Player(YELLOW,block_size,block_size,5)
-    
-    global grass_group
-    grass_group = pygame.sprite.Group()
-    
-    global level
-    level = 0
-    
-    p = 0
-    o = 0
-    
-    all_sprite_group.add(my_player)
-#end procedure
-'''def grass_spawn(level):
-    
-    x = 0   
-    l = grass_lane_list[level]
-    y = l[random.randint(0,len(l)-1)]
-    y = y*block_size
-    
-    my_grass = Grass(GREEN,block_size,block_size,x,y)
-    all_sprite_group.add(my_grass)
-    grass_group.add(my_grass)
-    x = x + 1'''
+          
 def car_spawn(level):
-    global p
-    global o
     o = 4
     p = 6
     x = screen.get_width()
@@ -204,18 +199,24 @@ def portal_spawn():
 #end procedure
 
 def show_score(x,y):
-    font = pygame.font.SysFont('Arial', 25, True, False)
+    font = pygame.font.SysFont('Arial', 20, True, False)
     text = font.render("Score: " + str(my_player.score),True,WHITE)
     screen.blit(text, (x,y))
 #end functions
 def show_time(x,y):
-    font = pygame.font.SysFont('Arial', 25, True, False)
+    font = pygame.font.SysFont('Arial', 20, True, False)
     text = font.render("Time: " + str(my_player.time),True,WHITE)
     screen.blit(text, (x,y))
 def show_level(x,y):
-    font = pygame.font.SysFont('Arial', 25, True, False)
+    font = pygame.font.SysFont('Arial', 20, True, False)
     text = font.render("Level: " + str(level + 1),True,WHITE)
     screen.blit(text, (x,y))
+
+def show_hs(x,y):
+    font = pygame.font.SysFont('Arial', 20, True, False)
+    text = font.render("HighScore: " + str(highscore),True,WHITE)
+    screen.blit(text, (x,y))
+    
     
 reset_game()
 pygame.init()
@@ -253,8 +254,8 @@ while not done:
     if player_hit_list:
         my_player.rect.x = screen.get_width()//2 - my_player.image.get_width()
         my_player.rect.y = screen.get_height()- my_player.image.get_height()
-        p = p + 2
-        o = o + 2
+        p = p + 3
+        o = o + 3
         level = level + 1
         if level >= len(car_lane_list):
             level = 0
@@ -268,10 +269,18 @@ while not done:
         screen.fill(WHITE)
         font= pygame.font.SysFont('Arial', 50, True, False)
         font2= pygame.font.SysFont('Arial', 30, True, False)
+        
+        if my_player.old_score > highscore:
+            highscore = my_player.old_score
+            with open(path.join(dir, HS_FILE),'w') as f:
+                f.write(str(my_player.old_score))
+        #end if
         #array of tuples
         text = [(font.render("GAME OVER",True,BLACK),4),
-                (font2.render("Score: " + str(my_player.old_score),True,BLACK),2.4),
-                (font2.render("Time: " + str(my_player.old_time),True,BLACK),2.1),
+                (font2.render("Level Reached " + str(level +1),True,BLACK),2.1),
+                (font2.render("Score: " + str(my_player.old_score),True,BLACK),1.9),\
+                (font2.render("Highscore: " + str(highscore),True,BLACK),2.4),
+                (font2.render("Time: " + str(my_player.old_time),True,BLACK),1.6),
                 (font.render("HIT RETURN TO PLAY AGAIN",True,BLACK),3)
                 ]
         for t,h in text:    
@@ -284,13 +293,14 @@ while not done:
         screen.fill(BLUE)
         #draw function
         all_sprite_group.draw(screen)
-        
+          
+       
     portal_spawn()
     car_spawn(level)
-#     grass_spawn(level)
     show_score(20,45)
     show_time(20,70)
     show_level(20,20)
+    show_hs(20,0)
     pygame.display.flip()
     clock.tick(60)
     
