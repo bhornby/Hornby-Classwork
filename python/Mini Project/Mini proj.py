@@ -1,6 +1,7 @@
 import pygame
 import random
 from os import path
+import fileinput
 
 #defining colours
 BLACK = (0,0,0)
@@ -71,12 +72,14 @@ def reset_game():
 def load_data():
     #load highscore
     global highscore
-    dir = path.dirname(__file__)
-    with open(path.join(dir, HS_FILE),'w') as f: #w opens file for reading and writing
-        try:
-            highscore = int(f.read())
-        except:
-            highscore = 0
+    global direc
+    highscore = 0
+    direc = path.dirname(__file__)
+    for line in fileinput.input('highscore.txt'):
+        highscore = int(line)
+        
+    print(highscore)
+        
 
 
 class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and attribute #and object is an instance of a class
@@ -272,7 +275,7 @@ while not done:
         
         if my_player.old_score > highscore:
             highscore = my_player.old_score
-            with open(path.join(dir, HS_FILE),'w') as f:
+            with open(path.join(direc, HS_FILE),'w') as f:
                 f.write(str(my_player.old_score))
         #end if
         #array of tuples
