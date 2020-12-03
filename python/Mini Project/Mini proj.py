@@ -10,6 +10,7 @@ RED = (255,0,0,)
 BLUE = (135,206,235)
 YELLOW = (255,255,0)
 GREEN= (124,252,0)
+CAR_IMAGE = pygame.image.load("carimage.png")
 
 block_size = 40
 #black screen
@@ -77,8 +78,7 @@ def load_data():
     direc = path.dirname(__file__)
     for line in fileinput.input('highscore.txt'):
         highscore = int(line)
-        
-    print(highscore)
+    
         
 
 
@@ -143,8 +143,9 @@ class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and a
 class Car(pygame.sprite.Sprite):
     def __init__(self,colour,width,height,x,y,speed):
         super().__init__()
-        self.image = pygame.Surface([width,height])
-        self.image.fill(colour)
+#         self.image = pygame.Surface([width,height])
+        self.image = pygame.transform.scale(pygame.image.load("therealcar.png").convert(),(block_size,block_size))
+#         self.image.fill(colour)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -202,21 +203,21 @@ def portal_spawn():
 #end procedure
 
 def show_score(x,y):
-    font = pygame.font.SysFont('Arial', 20, True, False)
+    font = pygame.font.SysFont('Arial', 25, True, False)
     text = font.render("Score: " + str(my_player.score),True,WHITE)
     screen.blit(text, (x,y))
 #end functions
 def show_time(x,y):
-    font = pygame.font.SysFont('Arial', 20, True, False)
+    font = pygame.font.SysFont('Arial', 25, True, False)
     text = font.render("Time: " + str(my_player.time),True,WHITE)
     screen.blit(text, (x,y))
 def show_level(x,y):
-    font = pygame.font.SysFont('Arial', 20, True, False)
+    font = pygame.font.SysFont('Arial', 25, True, False)
     text = font.render("Level: " + str(level + 1),True,WHITE)
     screen.blit(text, (x,y))
 
 def show_hs(x,y):
-    font = pygame.font.SysFont('Arial', 20, True, False)
+    font = pygame.font.SysFont('Arial', 25, True, False)
     text = font.render("HighScore: " + str(highscore),True,WHITE)
     screen.blit(text, (x,y))
     
@@ -300,10 +301,10 @@ while not done:
        
     portal_spawn()
     car_spawn(level)
-    show_score(20,45)
-    show_time(20,70)
-    show_level(20,20)
-    show_hs(20,0)
+    show_score(20,60)
+    show_time(20,85)
+    show_level(20,35)
+    show_hs(20,10)
     pygame.display.flip()
     clock.tick(60)
     
