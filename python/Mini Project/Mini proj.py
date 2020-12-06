@@ -33,7 +33,7 @@ car_lane_list = [[2,6,8],
 screen = pygame.display.set_mode(size)
 
 #title of the window
-pygame.display.set_caption("CRUSTY ROAD")
+pygame.display.set_caption("ZOMBIE CROSS")
 
 
 #time
@@ -89,8 +89,7 @@ class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and a
         #set player dimentions
         self.speed_x = 0
         self.speed_y = 0
-        self.image = pygame.Surface([width,height])
-        self.image.fill(colour)
+        self.image = pygame.transform.scale(pygame.image.load("frank.png").convert(),(block_size,block_size))
         self.score = 0
         self.old_score = 0
         self.lives = 1
@@ -129,7 +128,9 @@ class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and a
         self.old_y = self.rect.y 
         self.old_x = self.rect.x
         
-        self.old_score = self.score 
+        if self.score < 1:
+            self.score = 0
+        self.old_score = self.score
         self.old_time = self.time
         if self.start_time == 0:
             self.start_time = pygame.time.get_ticks()//1000
@@ -143,9 +144,7 @@ class Player(pygame.sprite.Sprite):  #blueprint for an object with methods and a
 class Car(pygame.sprite.Sprite):
     def __init__(self,colour,width,height,x,y,speed):
         super().__init__()
-#         self.image = pygame.Surface([width,height])
         self.image = pygame.transform.scale(pygame.image.load("therealcar.png").convert(),(block_size,block_size))
-#         self.image.fill(colour)
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -162,8 +161,7 @@ class Car(pygame.sprite.Sprite):
 class Portal(pygame.sprite.Sprite):
     def __init__(self,colour,width,height):
         super().__init__()
-        self.image = pygame.Surface([width,height])
-        self.image.fill(colour)
+        self.image = pygame.transform.scale(pygame.image.load("brainportal.png").convert(),(block_size,block_size))
         self.rect = self.image.get_rect()
         self.rect.x = 9*block_size
         self.rect.y = 0*block_size
@@ -262,7 +260,9 @@ while not done:
         o = o + 3
         level = level + 1
         if level >= len(car_lane_list):
-            level = 0
+            my_player.lives = 0
+            level = 9
+            
         
         #end if
     #next x
@@ -275,16 +275,16 @@ while not done:
         font2= pygame.font.SysFont('Arial', 30, True, False)
         
         if my_player.old_score > highscore:
-            highscore = my_player.old_score
+            highscore = my_player.old_score 
             with open(path.join(direc, HS_FILE),'w') as f:
-                f.write(str(my_player.old_score))
+                f.write(str(my_player.old_score))   
         #end if
         #array of tuples
         text = [(font.render("GAME OVER",True,BLACK),4),
                 (font2.render("Level Reached " + str(level +1),True,BLACK),2.1),
-                (font2.render("Score: " + str(my_player.old_score),True,BLACK),1.9),\
+                (font2.render("Score: " + str(my_player.old_score ),True,BLACK),1.9),\
                 (font2.render("Highscore: " + str(highscore),True,BLACK),2.4),
-                (font2.render("Time: " + str(my_player.old_time),True,BLACK),1.6),
+                (font2.render("Time: " + str(my_player.old_time),True,BLACK),1.7),
                 (font.render("HIT RETURN TO PLAY AGAIN",True,BLACK),3)
                 ]
         for t,h in text:    
