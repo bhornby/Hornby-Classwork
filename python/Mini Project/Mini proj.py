@@ -10,7 +10,7 @@ RED = (255,0,0,)
 BLUE = (135,206,235)
 YELLOW = (255,255,0)
 GREEN= (124,252,0)
-CAR_IMAGE = pygame.image.load("carimage.png")
+CAR_IMAGE = pygame.image.load("therealcar.png")
 
 block_size = 40
 #black screen

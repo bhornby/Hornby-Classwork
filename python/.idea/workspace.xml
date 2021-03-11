@@ -19,7 +19,47 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bbe891c1-19d3-4c7f-be07-94c0eb03272c" name="Default Changelist" comment="" />
+    <list default="true" id="bbe891c1-19d3-4c7f-be07-94c0eb03272c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Actual Project/dungeon jump.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/Screen Recording 2020-12-02 at 23.26.31.mov" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/Screen Recording 2020-12-02 at 23.50.31.mov" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/Screen Recording 2020-12-03 at 10.16.57.mov" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/Screenshot 2020-12-02 at 23.02.56.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/Screenshot 2020-12-02 at 23.10.20.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/Screenshot 2020-12-02 at 23.10.32.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/Screenshot 2020-12-02 at 23.40.18.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/Screenshot 2020-12-03 at 10.15.46.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/Screenshot 2020-12-03 at 22.54.53.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/Screenshot 2020-12-09 at 20.15.09.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/Screenshot 2020-12-11 at 12.07.01.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/brainportal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/carimage-1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/carimage.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/frank.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/headlessfrank.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/player.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/playerback.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/realcar.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/sportcarimage.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Mini Project/Design/therealcar.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pygame/Invader_collisions.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pygame/Invaders_final.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pygame/space_invader_test with score .py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mini Project/brainportal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mini Project/carimage-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mini Project/carimage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mini Project/frank.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mini Project/headlessfrank.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mini Project/player.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mini Project/playerback.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mini Project/realcar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mini Project/sportcarimage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mini Project/therealcar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pygame/Invader (working colisions no score) test with score .py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pygame/Invader (working colisions with score).py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pygame/Invaders(Working Score and Game over).py" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,12 +69,15 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectId" id="1kNeaNIUrWf3pJ3gQq2MUQmIQ40" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
@@ -90,23 +133,26 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="WindowStateProjectService">
-    <state width="1419" height="245" key="GridCell.Tab.0.bottom" timestamp="1606122355911">
+    <state width="1419" height="245" key="GridCell.Tab.0.bottom" timestamp="1610123575789">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1606122355911" />
-    <state width="1419" height="245" key="GridCell.Tab.0.center" timestamp="1606122355910">
+    <state width="1419" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1610123575789" />
+    <state width="1419" height="245" key="GridCell.Tab.0.center" timestamp="1610123575788">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1606122355910" />
-    <state width="1419" height="245" key="GridCell.Tab.0.left" timestamp="1606122355910">
+    <state width="1419" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1610123575788" />
+    <state width="1419" height="245" key="GridCell.Tab.0.left" timestamp="1610123575788">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1606122355910" />
-    <state width="1419" height="245" key="GridCell.Tab.0.right" timestamp="1606122355911">
+    <state width="1419" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1610123575788" />
+    <state width="1419" height="245" key="GridCell.Tab.0.right" timestamp="1610123575789">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state width="1419" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1606122355911" />
+    <state width="1419" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1610123575789" />
     <state x="221" y="89" key="SettingsEditor" timestamp="1605545773815">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
