@@ -1,10 +1,11 @@
 from random import randint
 import time
 
-t0 = time.time()
-processtime = time.time()-t0
-n = 0
-p = 1*10^6
+n = 10^9
+array = [randint(0,n) for i in range(0,n)]
+
+start_time = time.time()
+
 
 def insertion_sort(array):
     # Loop from the second element of the array until
@@ -23,12 +24,9 @@ def insertion_sort(array):
     #next i
     return array
 
-array = [n,p]
-
-
+duration = time.time() - start_time
+print(array)
 insertion_sort(array)
 print("insertion sort:")
-print("processing time = " + str(processtime))
-
-print("run time = " + str(time.time()-t0-processtime))
-
+print("run time = " + str(duration))
+print(array)
