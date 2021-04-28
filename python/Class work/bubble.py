@@ -2,6 +2,9 @@ import time
 
 t0 = time.time()
 processtime = time.time()-t0
+n = 0
+p = 1*10^6
+
 def bubble_sort(array):
     n = len(array)
 
@@ -15,20 +18,24 @@ def bubble_sort(array):
                 # If the item you're looking at is greater than its
                 # adjacent value, then swap them
                 array[j], array[j + 1] = array[j + 1], array[j]
-
-              
+        #next j
+                  #setting the ready sorted flag to false
                 already_sorted = False
 
         # If there were no swaps during the last iteration,
         # the array is already sorted, and you can terminate
         if already_sorted:
             break
-
+        #end if
+    #next i
     return array
-array = [randint(0, 1000) for i in range(1000)]
+array = [n,p]
 
 bubble_sort(array)
 
-print(processtime)
+print("bubble sort:")
 
-print(time.time()-t0-processtime)
+print("processing time = " + str(processtime))
+
+print("run time = " + str(time.time()-t0-processtime))
+

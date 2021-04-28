@@ -3,6 +3,8 @@ import time
 
 t0 = time.time()
 processtime = time.time()-t0
+n = 0
+p = 1*10^6
 
 def insertion_sort(array):
     # Loop from the second element of the array until
@@ -21,12 +23,12 @@ def insertion_sort(array):
     #next i
     return array
 
-array = [randint(0, 1000) for i in range(1000)]
+array = [n,p]
 
 
 insertion_sort(array)
+print("insertion sort:")
+print("processing time = " + str(processtime))
 
-print(processtime)
-
-print(time.time()-t0-processtime)
+print("run time = " + str(time.time()-t0-processtime))
 
